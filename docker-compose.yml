@@ -1,0 +1,20 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - MODE=${MODE:-dev}
+    ports:
+      - '${PORT:-3000}:${PORT:-3000}'
+    environment:
+      - NODE_ENV=${MODE:-dev}
+      - PORT=${PORT:-3000}
+      - REACT_APP_API_URL=${REACT_APP_API_URL:-http://localhost:5000}
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+    command:
+      - sh
+      - -c
+      - 'if [ "$NODE_ENV" = "prod" ]; then yarn build && yarn global add serve && serve -s build -l ${PORT:-3000}; else yarn start; fi'

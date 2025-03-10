@@ -8,7 +8,6 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <>
     <GlobalStyles />
-    <h1>Tavola Italiana</h1>
     <Login />
   </>
 );

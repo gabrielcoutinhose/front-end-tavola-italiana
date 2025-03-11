@@ -8,7 +8,7 @@ export const Container = styled.div`
   align-items: center;
 `;
 
-export const LoginImage = styled.img`
+export const RegisterImage = styled.img`
   height: 100%;
   width: 40%;
 `;
@@ -63,7 +63,7 @@ export const Input = styled.input`
   text-align: center;
 `;
 
-export const Register = styled.p`
+export const SignUp = styled.p`
   font-style: normal;
   font-weight: 300;
   font-size: 14px;

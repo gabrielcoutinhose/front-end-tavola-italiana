@@ -1,6 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
@@ -42,17 +43,6 @@ function Register() {
 
   const onSubmit = async (clientData) => {
     try {
-      // const response = await toast.promise(
-      //   api.post('sessions', {
-      //     email: clientData.email,
-      //     password: clientData.password,
-      //   }),
-      //   {
-      //     pending: 'Processing, wait a moment!',
-      //     success: 'Welcome!',
-      //     error: 'An error occurred!',
-      //   }
-      // );
       const { status, data } = await api.post(
         "users",
         {
@@ -122,7 +112,10 @@ function Register() {
           <Button type="submit">Sign Un</Button>
         </form>
         <SignUp>
-          Already have an account?? <a>Sign In</a>
+          Already have an account?{" "}
+          <Link style={{ color: "white" }} to="/login">
+            Sign In
+          </Link>
         </SignUp>
       </ContainerItems>
     </Container>

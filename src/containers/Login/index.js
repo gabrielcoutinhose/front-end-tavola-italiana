@@ -1,12 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
 import LoginImg from "../../assets/login-image.png";
 import Logo from "../../assets/logo.png";
 import Button from "../../components/Button";
+import { useUser } from "../../hooks/UserContext";
 import api from "../../services/api";
 import {
   Container,
@@ -19,6 +21,8 @@ import {
 } from "./styles";
 
 function Login() {
+  const { putUserData } = useUser();
+
   const schema = Yup.object().shape({
     email: Yup.string()
       .email("insert a valid e-mail, please!")
@@ -51,7 +55,7 @@ function Login() {
 
       if (status === 200) {
         toast.success("Welcome!");
-        console.log("Login successful:", data);
+        putUserData(data);
       } else if (status === 401) {
         toast.error("User not found. Please check your email.");
       } else if (status === 402) {
@@ -91,7 +95,10 @@ function Login() {
           <Button type="submit">Log In</Button>
         </form>
         <SignUp>
-          Don&apos;t have an account? <a>Signup</a>
+          Don&apos;t have an account?{" "}
+          <Link style={{ color: "white" }} to="/register">
+            Signup
+          </Link>
         </SignUp>
       </ContainerItems>
     </Container>

@@ -1,12 +1,13 @@
-import { yupResolver } from '@hookform/resolvers/yup';
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import * as Yup from 'yup';
+import { yupResolver } from "@hookform/resolvers/yup";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import * as Yup from "yup";
 
-import LoginImg from '../../assets/login-image.png';
-import Logo from '../../assets/logo.png';
-import Button from '../../components/Button';
-import api from '../../services/api';
+import LoginImg from "../../assets/login-image.png";
+import Logo from "../../assets/logo.png";
+import Button from "../../components/Button";
+import api from "../../services/api";
 import {
   Container,
   LoginImage,
@@ -14,17 +15,17 @@ import {
   Label,
   Input,
   ErrorMessage,
-  Register,
-} from './styles';
+  SignUp,
+} from "./styles";
 
 function Login() {
   const schema = Yup.object().shape({
     email: Yup.string()
-      .email('insert a valid e-mail, please!')
-      .required('the e-mail is required!'),
+      .email("insert a valid e-mail, please!")
+      .required("the e-mail is required!"),
     password: Yup.string()
-      .required('the password is required!')
-      .min(6, 'It must 6 characters'),
+      .required("the password is required!")
+      .min(6, "It must 6 characters"),
   });
 
   const {
@@ -34,13 +35,34 @@ function Login() {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const onSubmit = async (clientData) => {
-    const response = await api.post('sessions', {
-      email: clientData.email,
-      password: clientData.password,
-    });
 
-    console.log(response);
+  const onSubmit = async (clientData) => {
+    try {
+      const { status, data } = await api.post(
+        "sessions",
+        {
+          email: clientData.email,
+          password: clientData.password,
+        },
+        {
+          validateStatus: () => true,
+        }
+      );
+
+      if (status === 200) {
+        toast.success("Welcome!");
+        console.log("Login successful:", data);
+      } else if (status === 401) {
+        toast.error("User not found. Please check your email.");
+      } else if (status === 402) {
+        toast.error("Incorrect password. Try again!");
+      } else {
+        toast.error("Unexpected error. Please, try again later.");
+      }
+    } catch (err) {
+      console.error("Unexpected error:", err);
+      toast.error("Fail on system, please, try again.");
+    }
   };
 
   return (
@@ -54,7 +76,7 @@ function Login() {
           <Input
             type="email"
             placeholder="Username"
-            {...register('email')}
+            {...register("email")}
             error={errors.email?.message}
           />
           <ErrorMessage>{errors.email?.message}</ErrorMessage>
@@ -62,15 +84,15 @@ function Login() {
           <Input
             type="password"
             placeholder="Password"
-            {...register('password')}
+            {...register("password")}
             error={errors.password?.message}
           />
           <ErrorMessage>{errors.password?.message}</ErrorMessage>
           <Button type="submit">Log In</Button>
         </form>
-        <Register>
+        <SignUp>
           Don&apos;t have an account? <a>Signup</a>
-        </Register>
+        </SignUp>
       </ContainerItems>
     </Container>
   );

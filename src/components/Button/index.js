@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import PropTypes from "prop-types";
+import React from "react";
 
-import { CustomButton } from './styles';
+import { CustomButton } from "./styles";
 
 function Button({ children, ...rest }) {
   return <CustomButton {...rest}>{children}</CustomButton>;

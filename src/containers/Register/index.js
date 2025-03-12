@@ -1,12 +1,13 @@
-import { yupResolver } from '@hookform/resolvers/yup';
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import * as Yup from 'yup';
+import { yupResolver } from "@hookform/resolvers/yup";
+import React from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import * as Yup from "yup";
 
-import Logo from '../../assets/logo.png';
-import RegisterImg from '../../assets/register-image.png';
-import Button from '../../components/Button';
-import api from '../../services/api';
+import Logo from "../../assets/logo.png";
+import RegisterImg from "../../assets/register-image.png";
+import Button from "../../components/Button";
+import api from "../../services/api";
 import {
   Container,
   RegisterImage,
@@ -15,20 +16,20 @@ import {
   Input,
   ErrorMessage,
   SignUp,
-} from './styles';
+} from "./styles";
 
 function Register() {
   const schema = Yup.object().shape({
-    name: Yup.string().required('Name is required!'),
+    name: Yup.string().required("Name is required!"),
     email: Yup.string()
-      .email('insert a valid e-mail, please!')
-      .required('the e-mail is required!'),
+      .email("insert a valid e-mail, please!")
+      .required("the e-mail is required!"),
     password: Yup.string()
-      .required('the password is required!')
-      .min(6, 'It must 6 characters'),
+      .required("the password is required!")
+      .min(6, "It must 6 characters"),
     confirmPassword: Yup.string()
-      .required('the password confirmation is required!')
-      .oneOf([Yup.ref('password')], 'passwords must be the same'),
+      .required("the password confirmation is required!")
+      .oneOf([Yup.ref("password")], "passwords must be the same"),
   });
 
   const {
@@ -38,14 +39,45 @@ function Register() {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const onSubmit = async (clientData) => {
-    const response = await api.post('users', {
-      name: clientData.name,
-      email: clientData.email,
-      password: clientData.password,
-    });
 
-    console.log(response);
+  const onSubmit = async (clientData) => {
+    try {
+      // const response = await toast.promise(
+      //   api.post('sessions', {
+      //     email: clientData.email,
+      //     password: clientData.password,
+      //   }),
+      //   {
+      //     pending: 'Processing, wait a moment!',
+      //     success: 'Welcome!',
+      //     error: 'An error occurred!',
+      //   }
+      // );
+      const { status, data } = await api.post(
+        "users",
+        {
+          name: clientData.name,
+          email: clientData.email,
+          password: clientData.password,
+        },
+        {
+          validateStatus: () => true,
+        }
+      );
+
+      if (status === 201 || status === 200) {
+        toast.success("Registered with success!");
+      } else if (status === 409) {
+        toast.error("Email already in use. Try another one!");
+      } else if (status === 400) {
+        toast.error(data.error || "Invalid input. Check your information.");
+      } else {
+        toast.error("Unexpected error. Please, try again later.");
+      }
+    } catch (err) {
+      console.error("Unexpected error:", err);
+      toast.error("Fail on system, please, try again");
+    }
   };
 
   return (
@@ -59,7 +91,7 @@ function Register() {
           <Input
             type="text"
             placeholder="name"
-            {...register('name')}
+            {...register("name")}
             error={errors.name?.message}
           />
           <ErrorMessage>{errors.name?.message}</ErrorMessage>
@@ -67,7 +99,7 @@ function Register() {
           <Input
             type="email"
             placeholder="email"
-            {...register('email')}
+            {...register("email")}
             error={errors.email?.message}
           />
           <ErrorMessage>{errors.email?.message}</ErrorMessage>
@@ -75,7 +107,7 @@ function Register() {
           <Input
             type="password"
             placeholder="Password"
-            {...register('password')}
+            {...register("password")}
             error={errors.password?.message}
           />
           <ErrorMessage>{errors.password?.message}</ErrorMessage>
@@ -83,7 +115,7 @@ function Register() {
           <Input
             type="password"
             placeholder="Confirm the password"
-            {...register('confirmPassword')}
+            {...register("confirmPassword")}
             error={errors.confirmPassword?.message}
           />
           <ErrorMessage>{errors.confirmPassword?.message}</ErrorMessage>

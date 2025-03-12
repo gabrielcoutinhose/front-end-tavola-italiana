@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 
 const backEndTavolaItaliana = axios.create({
-  baseURL: process.env.REACT_APP_BACKEND_URL || 'http://localhost:3001',
+  baseURL: process.env.REACT_APP_BACKEND_URL || "http://localhost:3001",
 });
 
 export default backEndTavolaItaliana;

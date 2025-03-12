@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const Container = styled.div`
   height: 100vh;
@@ -58,7 +58,7 @@ export const Input = styled.input`
   background: #ffffff;
   box-shadow: 3px 3px 10px rgba(74, 144, 226, 0.19);
   border-radius: 5px;
-  border: ${(props) => (props.error ? ' 1px solid #ff0000' : 'none')};
+  border: ${(props) => (props.error ? " 1px solid #ff0000" : "none")};
   padding-left: 15px;
   text-align: center;
 `;

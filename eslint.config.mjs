@@ -10,7 +10,17 @@ import globals from "globals";
 export default [
   { files: ["**/*.{js,mjs,cjs,jsx}"] },
   {
-    languageOptions: { globals: globals.browser },
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        process: "readonly",
+      },
+    },
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
     plugins: {
       "import-helpers": pluginImportHelpers,
       "react-hooks": pluginReactHooks,

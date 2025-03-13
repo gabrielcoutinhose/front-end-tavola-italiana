@@ -6,4 +6,5 @@
 docker build --build-arg MODE=prod -t meu-project-frontend .
 docker run -p 3000:3000 meu-project-frontend
 ```
-## 
+
+##

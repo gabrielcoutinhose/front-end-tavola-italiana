@@ -32,6 +32,10 @@ export const UserProvider = ({ children }) => {
   );
 };
 
+UserProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
 export const useUser = () => {
   const context = useContext(UserContext);
 
@@ -40,8 +44,4 @@ export const useUser = () => {
   }
 
   return context;
-};
-
-UserProvider.PropTypes = {
-  children: PropTypes.node.isRequired,
 };

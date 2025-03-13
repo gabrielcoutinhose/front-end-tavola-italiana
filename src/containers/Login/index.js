@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
@@ -21,6 +21,8 @@ import {
 } from "./styles";
 
 function Login() {
+  const navigate = useNavigate();
+
   const { putUserData } = useUser();
 
   const schema = Yup.object().shape({
@@ -56,6 +58,9 @@ function Login() {
       if (status === 200) {
         toast.success("Welcome!");
         putUserData(data);
+        setTimeout(() => {
+          navigate("/");
+        }, 1000);
       } else if (status === 401) {
         toast.error("User not found. Please check your email.");
       } else if (status === 402) {

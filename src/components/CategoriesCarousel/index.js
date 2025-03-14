@@ -4,7 +4,7 @@ import Carousel from "react-elastic-carousel";
 import api from "../../services/api";
 import { Container, Title, ContainerItems, Image, Button } from "./styles";
 
-function CategoriesCarousel() {
+export function CategoriesCarousel() {
   const [categories, setCategories] = useState([]);
   useEffect(() => {
     async function loadCategories() {
@@ -44,5 +44,3 @@ function CategoriesCarousel() {
     </Container>
   );
 }
-
-export default CategoriesCarousel;

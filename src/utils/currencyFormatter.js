@@ -1,8 +1,8 @@
-const currencyFormatter = (value) => {
+const CurrencyFormatter = (value) => {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
   }).format(value);
 };
 
-export default currencyFormatter;
+export default CurrencyFormatter;

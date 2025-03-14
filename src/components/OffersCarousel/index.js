@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import Carousel from "react-elastic-carousel";
 
 import api from "../../services/api";
-import currencyFormatter from "../../utils/currencyFormatter";
+import CurrencyFormatter from "../../utils/currencyFormatter";
 import { Container, Title, ContainerItems, Image, Button } from "./styles";
 
-function OffersCarousel() {
+export function OffersCarousel() {
   const [offers, setOffers] = useState([]);
   useEffect(() => {
     async function loadOffers() {
@@ -16,7 +16,7 @@ function OffersCarousel() {
         .map((product) => {
           return {
             ...product,
-            formattedPrice: currencyFormatter(product.price),
+            formattedPrice: CurrencyFormatter(product.price),
           };
         });
 
@@ -54,5 +54,3 @@ function OffersCarousel() {
     </Container>
   );
 }
-
-export default OffersCarousel;

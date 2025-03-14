@@ -7,7 +7,7 @@ import * as Yup from "yup";
 
 import LoginImg from "../../assets/login-image.png";
 import Logo from "../../assets/logo.png";
-import Button from "../../components/Button";
+import { Button } from "../../components";
 import { useUser } from "../../hooks/UserContext";
 import api from "../../services/api";
 import {
@@ -20,7 +20,7 @@ import {
   SignUp,
 } from "./styles";
 
-function Login() {
+export function Login() {
   const navigate = useNavigate();
 
   const { putUserData } = useUser();
@@ -109,5 +109,3 @@ function Login() {
     </Container>
   );
 }
-
-export default Login;

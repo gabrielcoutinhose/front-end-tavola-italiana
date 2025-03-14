@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 const UserContext = createContext({});
 
 export const UserProvider = ({ children }) => {
-  const [userData, setUserdata] = useState({});
+  const [userData, setUserdata] = useState([]);
 
   const putUserData = async (imputedData) => {
     setUserdata(imputedData);

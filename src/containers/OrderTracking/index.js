@@ -1,17 +1,16 @@
 import React from "react";
 
-import { CartItems, CartResume } from "../../components";
+import { OrderCard } from "../../components";
 import { Container, ContainerItems } from "./styles";
 
-export function Cart() {
+export function OrderTracking() {
   return (
     <Container>
       <header>
-        <h1>header</h1>
+        <h2>Header</h2>
       </header>
       <ContainerItems>
-        <CartItems />
-        <CartResume />
+        <OrderCard />
       </ContainerItems>
     </Container>
   );

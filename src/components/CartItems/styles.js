@@ -6,6 +6,12 @@ export const Container = styled.div`
   border-radius: 6px;
   padding: 10px;
   width: max-content;
+
+  h2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
 `;
 
 export const Header = styled.div`
@@ -41,27 +47,27 @@ export const Body = styled.div`
 export const QuantityContainer = styled.div`
   display: flex;
   gap: 10px;
+`;
 
-  button {
+export const Button = styled.button`
+  height: 20px;
+  background: transparent;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+    transform: scale(1.6);
+  }
+
+  &:active {
+    opacity: 0.6;
+  }
+
+  img {
+    width: 20px;
     height: 20px;
-    background: transparent;
-    border: none;
-    font-size: 14px;
-    cursor: pointer;
-
-    &:hover {
-      opacity: 0.8;
-      transform: scale(1.6);
-    }
-
-    &:active {
-      opacity: 0.6;
-    }
-
-    img {
-      width: 20px;
-      height: 20px;
-    }
   }
 `;
 

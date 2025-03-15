@@ -12,6 +12,7 @@ import {
   Body,
   EmptyCart,
   QuantityContainer,
+  Button,
 } from "./styles";
 
 export function CartItems() {
@@ -24,14 +25,15 @@ export function CartItems() {
 
   return (
     <Container>
+      <h2>Cart</h2>
+      <Header>
+        <p></p>
+        <p>Items</p>
+        <p>Price</p>
+        <p>Quantity</p>
+        <p style={{ marginLeft: 25 }}>Total</p>
+      </Header>
       <div>
-        <Header>
-          <p></p>
-          <p>Items</p>
-          <p>Price</p>
-          <p>Quantity</p>
-          <p style={{ marginLeft: 25 }}>Total</p>
-        </Header>
         {cartProducts && cartProducts.length > 0 ? (
           cartProducts.map((product) => (
             <Body key={product.id}>
@@ -39,16 +41,16 @@ export function CartItems() {
               <p>{product.name}</p>
               <p>{CurrencyFormatter(product.price)}</p>
               <QuantityContainer>
-                <button onClick={() => deleteProducts(product.id)}>
+                <Button onClick={() => deleteProducts(product.id)}>
                   <img src={DeleteIcon} />
-                </button>
-                <button onClick={() => decreaseCartProducts(product.id)}>
+                </Button>
+                <Button onClick={() => decreaseCartProducts(product.id)}>
                   <img src={RemoveIcon} />
-                </button>
+                </Button>
                 <p>{product.quantity}</p>
-                <button onClick={() => increaseCartProducts(product.id)}>
+                <Button onClick={() => increaseCartProducts(product.id)}>
                   <img src={AddIcon} />
-                </button>
+                </Button>
               </QuantityContainer>
               <p>{CurrencyFormatter(product.quantity * product.price)}</p>
             </Body>

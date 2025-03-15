@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import ProductsImg from "../../assets/products-image.png";
+import ProductsImg from "../../assets/images/products-image.png";
 import { CardProduct } from "../../components";
 import api from "../../services/api";
 import CurrencyFormatter from "../../utils/currencyFormatter";

@@ -1,6 +1,6 @@
 import React from "react";
 
-import HomeImg from "../../assets/home-image.png";
+import HomeImg from "../../assets/images/home-image.png";
 import { CategoriesCarousel, OffersCarousel } from "../../components";
 import { Container, HomeImage } from "./styles";
 

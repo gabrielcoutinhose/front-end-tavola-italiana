@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
-import Logo from "../../assets/logo.png";
-import RegisterImg from "../../assets/register-image.png";
+import RegisterImg from "../../assets/images/register-image.png";
+import Logo from "../../assets/logo/logo.png";
 import { Button } from "../../components";
 import api from "../../services/api";
 import {

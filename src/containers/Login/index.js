@@ -5,8 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
-import LoginImg from "../../assets/login-image.png";
-import Logo from "../../assets/logo.png";
+import LoginImg from "../../assets/images/login-image.png";
+import Logo from "../../assets/logo/logo.png";
 import { Button } from "../../components";
 import { useUser } from "../../hooks/UserContext";
 import api from "../../services/api";

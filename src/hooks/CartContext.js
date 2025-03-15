@@ -6,7 +6,18 @@ const CartContext = createContext({});
 export const CartProvider = ({ children }) => {
   const [cartProducts, setCartProducts] = useState([]);
 
+  const updateLocalStorage = async (products) => {
+    await localStorage.setItem(
+      "tavolaItaliana:CartData",
+      JSON.stringify(products)
+    );
+  };
+
   const addProductsToCart = async (product) => {
+    if (!product.id) {
+      console.error("Product without ID:", product);
+      return;
+    }
     const cartIndex = cartProducts.findIndex(
       (duplicateProduct) => duplicateProduct.id === product.id
     );
@@ -21,10 +32,38 @@ export const CartProvider = ({ children }) => {
       newCartProducts = [...cartProducts, product];
       setCartProducts(newCartProducts);
     }
-    await localStorage.setItem(
-      "tavolaItaliana:CartData",
-      JSON.stringify(newCartProducts)
+    await updateLocalStorage(newCartProducts);
+  };
+
+  const deleteProducts = async (ProductId) => {
+    const newCart = cartProducts.filter((product) => product.id != ProductId);
+    setCartProducts(newCart);
+    await updateLocalStorage(newCart);
+  };
+
+  const increaseCartProducts = async (ProductId) => {
+    const newCart = cartProducts.map((product) => {
+      return product.id === ProductId
+        ? { ...product, quantity: product.quantity + 1 }
+        : product;
+    });
+    setCartProducts(newCart);
+    await updateLocalStorage(newCart);
+  };
+
+  const decreaseCartProducts = async (ProductId) => {
+    const cartIndex = cartProducts.findIndex(
+      (productToDecrease) => productToDecrease.id === ProductId
     );
+    if (cartProducts[cartIndex].quantity > 1) {
+      const newCart = cartProducts.map((product) => {
+        return product.id === ProductId
+          ? { ...product, quantity: product.quantity - 1 }
+          : product;
+      });
+      setCartProducts(newCart);
+      await updateLocalStorage(newCart);
+    }
   };
 
   useEffect(() => {
@@ -40,7 +79,15 @@ export const CartProvider = ({ children }) => {
   }, []);
 
   return (
-    <CartContext.Provider value={{ cartProducts, addProductsToCart }}>
+    <CartContext.Provider
+      value={{
+        cartProducts,
+        addProductsToCart,
+        increaseCartProducts,
+        decreaseCartProducts,
+        deleteProducts,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

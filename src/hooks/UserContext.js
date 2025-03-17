@@ -15,6 +15,10 @@ export const UserProvider = ({ children }) => {
     );
   };
 
+  const logOut = async () => {
+    await localStorage.removeItem("tavolaItaliana:UserData");
+  };
+
   useEffect(() => {
     const loadUserData = async () => {
       const clientData = await localStorage.getItem("tavolaItaliana:UserData");
@@ -26,7 +30,7 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ userData, putUserData }}>
+    <UserContext.Provider value={{ userData, putUserData, logOut }}>
       {children}
     </UserContext.Provider>
   );

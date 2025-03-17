@@ -6,9 +6,6 @@ import { Container, ContainerItems } from "./styles";
 export function Cart() {
   return (
     <Container>
-      <header>
-        <h1>header</h1>
-      </header>
       <ContainerItems>
         <CartItems />
         <CartResume />

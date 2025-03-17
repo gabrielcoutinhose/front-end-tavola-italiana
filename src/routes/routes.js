@@ -19,9 +19,9 @@ function AppRoutes() {
         <Route path="/register" element={<Register />} />
         <Route element={<PrivateRoute />}>
           <Route path="/" element={<Home />} />
-          <Route path="/products" element={<Products />} />
+          <Route path="/products/:categoryId?" element={<Products />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/order-tracking/:orderId" element={<OrderTracking />} />
+          <Route path="/order-tracking/:orderId?" element={<OrderTracking />} />
         </Route>
       </Routes>
     </Router>

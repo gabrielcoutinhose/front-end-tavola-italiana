@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from "react";
 import Carousel from "react-elastic-carousel";
+import { toast } from "react-toastify";
 
+import { useCart } from "../../hooks/CartContext";
 import api from "../../services/api";
 import CurrencyFormatter from "../../utils/currencyFormatter";
 import { Container, Title, ContainerItems, Image, Button } from "./styles";
 
 export function OffersCarousel() {
   const [offers, setOffers] = useState([]);
+  const { addProductsToCart } = useCart();
+
   useEffect(() => {
     async function loadOffers() {
       const { data } = await api.get("products");
-
-      const olyOffers = data
+      const onlyOffers = data
         .filter((product) => product.offer)
-        .map((product) => {
-          return {
-            ...product,
-            formattedPrice: CurrencyFormatter(product.price),
-          };
-        });
-
-      setOffers(olyOffers);
+        .map((product) => ({
+          ...product,
+          formattedPrice: CurrencyFormatter(product.price),
+        }));
+      setOffers(onlyOffers);
     }
     loadOffers();
   }, []);
@@ -32,6 +32,11 @@ export function OffersCarousel() {
     { width: 900, itemsToShow: 4 },
     { width: 1300, itemsToShow: 5 },
   ];
+
+  const handleOrderNow = async (offer) => {
+    await addProductsToCart(offer);
+    toast.success(`Offer ${offer.name} added to cart!`);
+  };
 
   return (
     <Container>
@@ -47,7 +52,7 @@ export function OffersCarousel() {
               <Image src={offer.url} alt={`product ${offer.name} in offer`} />
               <p>{offer.name}</p>
               <p>{offer.formattedPrice}</p>
-              <Button>Order now</Button>
+              <Button onClick={() => handleOrderNow(offer)}>Order now</Button>
             </ContainerItems>
           ))}
       </Carousel>

@@ -7,7 +7,7 @@ export default createGlobalStyle`
     --primary-color: #F79D65;
     --secondary-color: #F7B267;
     --accent-color: #F27059;
-    --auxiliary-color: #ffffff
+    --auxiliary-color: #AD1E2E;
     --text-dark: #000000;
     --text-light: #ffffff;
   } 

@@ -37,7 +37,7 @@ export function CategoriesCarousel() {
                 src={category.url}
                 alt={`product in ${category.name} category`}
               />
-              <Button>{category.name}</Button>
+              <Button to={`/products/${category.id}`}>{category.name}</Button>
             </ContainerItems>
           ))}
       </Carousel>

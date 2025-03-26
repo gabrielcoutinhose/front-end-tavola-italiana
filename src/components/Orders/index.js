@@ -17,50 +17,38 @@ import { toast } from "react-toastify";
 
 import api from "../../services/api";
 import { dateFormatter } from "../../utils/dateFormatter";
-import { Container, ProductImg, ReactSelectStyled } from "./styles";
+import {
+  Container,
+  ProductImg,
+  ReactSelectStyled,
+  Menu,
+  LinkMenu,
+} from "./styles";
 
-function Row({ row }) {
+const status = [
+  { id: 0, label: "all", value: "all" },
+  { id: 1, label: "order placed", value: "order placed" },
+  { id: 2, label: "order under review", value: "order under review" },
+  { id: 3, label: "order accepted", value: "order accepted" },
+  { id: 4, label: "order in preparation", value: "order in preparation" },
+  { id: 5, label: "order out for delivery", value: "order out for delivery" },
+  {
+    id: 6,
+    label: "order delivered and finalized",
+    value: "order delivered and finalized",
+  },
+];
+
+function Row({ row, onStatusUpdate }) {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const status = [
-    {
-      id: 1,
-      label: "order placed",
-      value: "order placed",
-    },
-    {
-      id: 2,
-      label: "order under review",
-      value: "order under review",
-    },
-    {
-      id: 3,
-      label: "order accepted",
-      value: "order accepted",
-    },
-    {
-      id: 4,
-      label: "order in preparation",
-      value: "order in preparation",
-    },
-    {
-      id: 5,
-      label: "order out for delivery",
-      value: "order out for delivery",
-    },
-    {
-      id: 6,
-      label: "order delivered and finalized",
-      value: "order delivered and finalized",
-    },
-  ];
-
-  async function setNewStatus(id, status) {
+  async function setNewStatus(id, statusValue) {
     setIsLoading(true);
     try {
-      await api.put(`orders/${id}`, { status });
+      await api.put(`orders/${id}`, { status: statusValue });
       toast.success("Status updated successfully!");
+      onStatusUpdate(id, statusValue);
     } catch (err) {
       console.log(err);
       toast.error("Error updating status.");
@@ -94,9 +82,7 @@ function Row({ row }) {
             defaultValue={
               status.find((option) => option.value === row.status) || null
             }
-            onChange={(newStatus) => {
-              setNewStatus(row.orderId, newStatus.value);
-            }}
+            onChange={(newStatus) => setNewStatus(row.orderId, newStatus.value)}
             isLoading={isLoading}
           />
         </TableCell>
@@ -154,24 +140,30 @@ Row.propTypes = {
       })
     ).isRequired,
   }).isRequired,
+  onStatusUpdate: PropTypes.func.isRequired,
 };
 
 export function Orders() {
   const [orders, setOrders] = useState([]);
+  const [filteredOrders, setFilteredOrders] = useState([]);
   const [rows, setRows] = useState([]);
+  const [currentFilter, setCurrentFilter] = useState(status[0]);
 
   useEffect(() => {
     async function loadOrders() {
       const { data } = await api.get("orders");
       setOrders(data);
+      setFilteredOrders(data);
     }
     loadOrders();
   }, []);
 
   useEffect(() => {
-    const newRows = orders.map((currentOrder) => createData(currentOrder));
+    const newRows = filteredOrders.map((currentOrder) =>
+      createData(currentOrder)
+    );
     setRows(newRows);
-  }, [orders]);
+  }, [filteredOrders]);
 
   function createData(order) {
     return {
@@ -183,8 +175,45 @@ export function Orders() {
     };
   }
 
+  function handleStatus(statusItem) {
+    setCurrentFilter(statusItem);
+    if (statusItem.id === 0) {
+      setFilteredOrders(orders);
+    } else {
+      const newOrders = orders.filter(
+        (order) => order.status === statusItem.value
+      );
+      setFilteredOrders(newOrders);
+    }
+  }
+
+  function handleStatusUpdate(orderId, newStatus) {
+    const updatedOrders = orders.map((order) =>
+      order._id === orderId ? { ...order, status: newStatus } : order
+    );
+    setOrders(updatedOrders);
+    if (currentFilter.id === 0) {
+      setFilteredOrders(updatedOrders);
+    } else {
+      setFilteredOrders(
+        updatedOrders.filter((order) => order.status === currentFilter.value)
+      );
+    }
+  }
+
   return (
     <Container>
+      <Menu>
+        {status.map((item) => (
+          <LinkMenu
+            key={item.id}
+            onClick={() => handleStatus(item)}
+            isActive={currentFilter.id === item.id}
+          >
+            {item.label}
+          </LinkMenu>
+        ))}
+      </Menu>
       <TableContainer component={Paper}>
         <Table aria-label="collapsible table">
           <TableHead>
@@ -198,7 +227,11 @@ export function Orders() {
           </TableHead>
           <TableBody>
             {rows.map((row) => (
-              <Row key={row.orderId} row={row} />
+              <Row
+                key={row.orderId}
+                row={row}
+                onStatusUpdate={handleStatusUpdate}
+              />
             ))}
           </TableBody>
         </Table>

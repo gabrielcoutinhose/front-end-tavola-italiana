@@ -20,3 +20,21 @@ export const ReactSelectStyled = styled(ReactSelect)`
     cursor: pointer;
   }
 `;
+
+export const Menu = styled.div`
+  display: flex;
+  gap: 50px;
+  justify-content: center;
+  margin: 20px 0;
+`;
+
+export const LinkMenu = styled.a`
+  color: var(--text-dark);
+  cursor: pointer;
+  ${({ isActive }) =>
+    isActive &&
+    `
+    color: var(--auxiliary-color);
+    font-weight: bold;
+  `}
+`;

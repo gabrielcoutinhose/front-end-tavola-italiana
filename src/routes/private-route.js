@@ -4,20 +4,27 @@ import { Navigate, Outlet } from "react-router-dom";
 
 import { Header } from "../components";
 
-function PrivateRoute() {
+function PrivateRoute({ isAdmin = false }) {
   const user = localStorage.getItem("tavolaItaliana:UserData");
-  return user ? (
-    <>
-      <Header />
-      <Outlet />{" "}
-    </>
-  ) : (
-    <Navigate to="/login" replace />
-  );
+
+  if (user) {
+    const parsedUser = JSON.parse(user);
+    if (isAdmin && !parsedUser.admin) {
+      return <Navigate to="/" replace />;
+    }
+    return (
+      <>
+        {!isAdmin && <Header />}
+        <Outlet />
+      </>
+    );
+  }
+
+  return <Navigate to="/login" replace />;
 }
 
 PrivateRoute.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired,
+  isAdmin: PropTypes.bool.isRequired,
 };
 
 export default PrivateRoute;

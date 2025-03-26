@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import api from "../../services/api";
+import { dateFormatter } from "../../utils/dateFormatter";
 import { Container, Orders } from "./styles";
 
 export function OrderCard() {
@@ -47,7 +48,7 @@ export function OrderCard() {
               </h4>
             </div>
             <div>
-              <p className="order-made-on">
+              {/* <p className="order-made-on">
                 Order made on:{" "}
                 <span className="made-on">
                   {orderItem?.createdAt
@@ -77,6 +78,18 @@ export function OrderCard() {
                         hour12: false,
                       }).format(new Date(orderItem.updatedAt))
                     : "N/A"}
+                </span>
+              </p> */}
+              <p className="order-made-on">
+                Order made on:{" "}
+                <span className="made-on">
+                  {dateFormatter(orderItem?.createdAt)}
+                </span>
+              </p>
+              <p className="order-update-on">
+                Updated on:{" "}
+                <span className="update-on">
+                  {dateFormatter(orderItem?.updatedAt)}
                 </span>
               </p>
               <p className="order-status-head">

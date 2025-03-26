@@ -8,6 +8,7 @@ import {
   Register,
   Cart,
   OrderTracking,
+  Admin,
 } from "../containers";
 import PrivateRoute from "./private-route";
 
@@ -22,6 +23,9 @@ function AppRoutes() {
           <Route path="/products/:categoryId?" element={<Products />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/order-tracking/:orderId?" element={<OrderTracking />} />
+        </Route>
+        <Route element={<PrivateRoute isAdmin={true} />}>
+          <Route path="/orders" element={<Admin />} />
         </Route>
       </Routes>
     </Router>

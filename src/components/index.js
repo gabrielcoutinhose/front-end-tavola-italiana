@@ -6,3 +6,4 @@ export * from "./CartItems";
 export * from "./CartResume";
 export * from "./OrderCard";
 export * from "./Header";
+export * from "./Orders";

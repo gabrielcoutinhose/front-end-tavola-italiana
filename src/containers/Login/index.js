@@ -54,12 +54,15 @@ export function Login() {
           validateStatus: () => true,
         }
       );
-
       if (status === 200) {
         toast.success("Welcome!");
         putUserData(data);
         setTimeout(() => {
-          navigate("/");
+          if (data.admin) {
+            navigate("/orders");
+          } else {
+            navigate("/");
+          }
         }, 1000);
       } else if (status === 401) {
         toast.error("User not found. Please check your email.");

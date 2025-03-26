@@ -4,3 +4,4 @@ export * from "./Home";
 export * from "./Products";
 export * from "./Cart";
 export * from "./OrderTracking";
+export * from "./Admin";

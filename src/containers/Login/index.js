@@ -59,7 +59,7 @@ export function Login() {
         putUserData(data);
         setTimeout(() => {
           if (data.admin) {
-            navigate("/orders");
+            navigate("/store-orders");
           } else {
             navigate("/");
           }

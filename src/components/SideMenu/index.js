@@ -18,7 +18,7 @@ export function SideMenu({ onToolChange }) {
     {
       id: 1,
       label: "Orders",
-      link: "/orders",
+      link: "/store-orders",
       icon: ordersIcon,
       tool: "orders",
     },
@@ -38,7 +38,8 @@ export function SideMenu({ onToolChange }) {
     },
   ];
 
-  const handleClick = (link, tool) => {
+  const handleClick = (e, link, tool) => {
+    e.preventDefault();
     navigate(link);
     onToolChange(tool);
   };
@@ -50,7 +51,7 @@ export function SideMenu({ onToolChange }) {
         <Links key={item.id}>
           <Item
             to={item.link}
-            onClick={() => handleClick(item.link, item.tool)}
+            onClick={(e) => handleClick(e, item.link, item.tool)}
             isActive={location.pathname === item.link}
           >
             <img src={item.icon} alt={`${item.label} icon`} /> {item.label}

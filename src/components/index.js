@@ -7,3 +7,6 @@ export * from "./CartResume";
 export * from "./OrderCard";
 export * from "./Header";
 export * from "./Orders";
+export * from "./Products";
+export * from "./AddProduct";
+export * from "./SideMenu";

@@ -26,12 +26,12 @@ import {
 } from "./styles";
 
 const status = [
-  { id: 0, label: "all", value: "all" },
-  { id: 1, label: "order placed", value: "order placed" },
-  { id: 2, label: "order under review", value: "order under review" },
-  { id: 3, label: "order accepted", value: "order accepted" },
-  { id: 4, label: "order in preparation", value: "order in preparation" },
-  { id: 5, label: "order out for delivery", value: "order out for delivery" },
+  { id: 0, label: "All Orders", value: "all" },
+  { id: 1, label: "Order placed", value: "order placed" },
+  { id: 2, label: "Order under review", value: "order under review" },
+  { id: 3, label: "Order accepted", value: "order accepted" },
+  { id: 4, label: "Order in preparation", value: "order in preparation" },
+  { id: 5, label: "Order out for delivery", value: "order out for delivery" },
   {
     id: 6,
     label: "order delivered and finalized",

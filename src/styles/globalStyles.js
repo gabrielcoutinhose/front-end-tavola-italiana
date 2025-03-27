@@ -4,12 +4,13 @@ import "react-toastify/dist/ReactToastify.css";
 export default createGlobalStyle`
 
   :root {
-    --primary-color: #F79D65;
-    --secondary-color: #F7B267;
-    --accent-color: #F27059;
-    --auxiliary-color: #AD1E2E;
-    --text-dark: #000000;
-    --text-light: #ffffff;
+    --base-color: #998783;
+    --primary-color: #CEBCB2;
+    --secondary-color: #F3D7C2;
+    --auxiliary-color: #E6C099;
+    --accent-color: #D1A274;
+    --text-dark: #2B2B2B;
+    --text-light: #FFFFFF;
   } 
 
   * {

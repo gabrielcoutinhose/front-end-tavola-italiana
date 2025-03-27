@@ -23,7 +23,7 @@ export const PageLink = styled.a`
 
   cursor: pointer;
   text-decoration: none;
-  color: ${(props) => (props.isActive ? "#AD1E2E" : "#000000")};
+  color: ${(props) => (props.isActive ? "var(--accent-color)" : "#000000")};
   font-weight: ${(props) => (props.isActive ? "bold" : "normal")};
   font-size: 16px;
   line-height: 19px;

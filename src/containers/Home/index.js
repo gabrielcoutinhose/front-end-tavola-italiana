@@ -1,15 +1,17 @@
 import React from "react";
 
-import HomeImg from "../../assets/images/home-image.png";
 import { CategoriesCarousel, OffersCarousel } from "../../components";
-import { Container, HomeImage } from "./styles";
+import { Container, BoxTop, BoxBottom } from "./styles";
 
 export function Home() {
   return (
     <Container>
-      <HomeImage src={HomeImg} alt="home-image" />
-      <CategoriesCarousel />
-      <OffersCarousel />
+      <BoxTop>
+        <CategoriesCarousel />
+      </BoxTop>
+      <BoxBottom>
+        <OffersCarousel />
+      </BoxBottom>
     </Container>
   );
 }

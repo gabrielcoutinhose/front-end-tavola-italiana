@@ -14,7 +14,7 @@ export const LoginImage = styled.img`
 `;
 
 export const ContainerItems = styled.div`
-  background: var(--primary-color);
+  background: var(--base-color);
   height: 100%;
   width: 100%;
   display: flex;

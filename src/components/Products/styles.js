@@ -5,4 +5,52 @@ export const Container = styled.div`
   min-height: 100vh;
   width: 100%;
   padding: 20px;
+  overflow-x: auto;
+`;
+
+export const Image = styled.img`
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+`;
+
+export const Img = styled.img`
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+
+  ${({ isYes }) =>
+    isYes
+      ? `
+          background: #9ACD32;
+          border: none;
+        `
+      : `
+          background: #E9967A;
+          border: none;
+        `}
+`;
+
+export const Button = styled.button`
+  background: var(--accent-color);
+  padding: 2px;
+  border: none;
+  border-radius: 6px;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+
+  img {
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+  }
+
+  &:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+
+  &:active {
+    opacity: 0.6;
+  }
 `;

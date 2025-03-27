@@ -2,18 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import ProductsImg from "../../assets/images/products-image.png";
 import { CardProduct } from "../../components";
 import { useCart } from "../../hooks/CartContext";
 import api from "../../services/api";
 import CurrencyFormatter from "../../utils/currencyFormatter";
-import {
-  Container,
-  ProductsImage,
-  Menu,
-  Button,
-  ProductContainer,
-} from "./styles";
+import { Container, Menu, Button, ProductContainer } from "./styles";
 
 export function Products() {
   const { categoryId } = useParams();
@@ -64,7 +57,6 @@ export function Products() {
 
   return (
     <Container>
-      <ProductsImage src={ProductsImg} alt="home-image" />
       <Menu>
         {categories &&
           categories.map((category) => (

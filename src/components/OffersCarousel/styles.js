@@ -7,15 +7,16 @@ export const Container = styled.div`
   align-items: center;
   gap: 35px;
   padding: 35px 0;
+  height: 100%;
+  width: 100%;
 
   .rec.rec-arrow,
   .rec.rec-dot {
-    background: var(--primary-color);
+    background: transparent;
     border: none;
     box-shadow: 0 0 5px black;
   }
   .rec.rec-dot_active {
-    background-color: var(--primary-color);
     border: 1px solid black;
   }
 `;
@@ -24,7 +25,7 @@ export const Title = styled.h1`
   font-weight: normal;
   font-style: bold;
   font-size: 40px;
-  color: var(--text-light);
+  color: var(--text-dark);
 `;
 
 export const ContainerItems = styled.div`
@@ -45,7 +46,7 @@ export const Image = styled.img`
   height: 200px;
   border-radius: 10px;
   border: none;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 `;
 
 export const Button = styled.button`
@@ -56,7 +57,7 @@ export const Button = styled.button`
   height: 25px;
   border: none;
   border-radius: 6px;
-  color: var(--text-light);
+  color: var(--text-dark);
   font-style: normal;
   font-weight: bold;
   font-size: 14px;

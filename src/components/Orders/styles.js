@@ -35,7 +35,10 @@ export const LinkMenu = styled.a`
   ${({ isActive }) =>
     isActive &&
     `
-    color: var(--auxiliary-color);
+    background: var(--accent-color);
+    color: var(--text-light);
     font-weight: bold;
+    border: none;
+    border-radius: 6px;
   `}
 `;

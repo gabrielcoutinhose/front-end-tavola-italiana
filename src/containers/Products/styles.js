@@ -8,27 +8,22 @@ export const Container = styled.div`
   align-items: center;
 `;
 
-export const ProductsImage = styled.img`
-  width: 100%;
-  height: 250px;
-`;
-
 export const Menu = styled.div`
   display: flex;
   justify-content: center;
   gap: 20px;
   margin-top: 20px;
-
   min-height: 20px;
   max-width: 90vw;
 `;
 
 export const Button = styled.button`
   cursor: pointer;
-  background: ${(props) => (props.isActiveCategory ? "#F27059" : "#F79D65")};
+  background: ${(props) =>
+    props.isActiveCategory ? "var(--accent-color)" : "var(--secondary-color)"};
   border: none;
   border-radius: 4px;
-  color: var(--text-light);
+  color: var(--text-dark);
   font-size: 14px;
   line-height: 20px;
   font-style: bold;

@@ -1,5 +1,6 @@
+import PropTypes from "prop-types";
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import logoutIcon from "../../assets/icons/logout-32.png";
 import ordersIcon from "../../assets/icons/shops-32.png";
@@ -8,8 +9,9 @@ import productsIcon from "../../assets/icons/store-32.png";
 import { useUser } from "../../hooks/UserContext";
 import { Container, Links, Item } from "./styles";
 
-export function SideMenu() {
+export function SideMenu({ onToolChange }) {
   const location = useLocation();
+  const navigate = useNavigate();
   const { logout } = useUser();
 
   const links = [
@@ -18,34 +20,44 @@ export function SideMenu() {
       label: "Orders",
       link: "/orders",
       icon: ordersIcon,
+      tool: "orders",
     },
     {
       id: 2,
       label: "Products",
-      link: "/products",
+      link: "/store-products",
       icon: productsIcon,
+      tool: "store-products",
     },
     {
       id: 3,
       label: "Add Product",
-      link: "/product",
+      link: "/add-store-product",
       icon: productsIcon2,
+      tool: "add-store-product",
     },
   ];
 
+  const handleClick = (link, tool) => {
+    navigate(link);
+    onToolChange(tool);
+  };
+
   return (
     <Container>
-      <hr></hr>
+      <hr />
       {links.map((item) => (
         <Links key={item.id}>
-          <Item to={item.link} isActive={location.pathname === item.link}>
-            {" "}
+          <Item
+            to={item.link}
+            onClick={() => handleClick(item.link, item.tool)}
+            isActive={location.pathname === item.link}
+          >
             <img src={item.icon} alt={`${item.label} icon`} /> {item.label}
           </Item>
         </Links>
       ))}
-      <hr></hr>
-
+      <hr />
       <Links style={{ position: "absolute", bottom: "30px" }}>
         <Item to="/login" onClick={logout}>
           <img src={logoutIcon} alt="logout" />
@@ -55,3 +67,7 @@ export function SideMenu() {
     </Container>
   );
 }
+
+SideMenu.propTypes = {
+  onToolChange: PropTypes.func.isRequired,
+};

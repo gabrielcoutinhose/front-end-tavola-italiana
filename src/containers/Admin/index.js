@@ -17,8 +17,8 @@ export function Admin() {
       </LeftBox>
       <RightBox>
         {activeTool === "orders" && <Orders />}
-        {activeTool === "products" && <Products />}
-        {activeTool === "addProduct" && <AddProduct />}
+        {activeTool === "store-products" && <Products />}
+        {activeTool === "add-store-product" && <AddProduct />}
       </RightBox>
     </Container>
   );

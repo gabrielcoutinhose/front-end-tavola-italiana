@@ -6,11 +6,12 @@ export const Container = styled.div`
   min-height: 100vh;
   width: 100%;
   padding: 20px;
+  overflow-x: auto;
 `;
 
 export const ProductImg = styled.img`
-  width: 150px;
-  height: 150px;
+  width: 50px;
+  height: 50px;
   border-radius: 6px;
 `;
 

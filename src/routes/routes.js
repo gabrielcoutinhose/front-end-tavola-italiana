@@ -27,6 +27,7 @@ function AppRoutes() {
         <Route element={<PrivateRoute isAdmin={true} />}>
           <Route path="/store-orders" element={<Admin />} />
           <Route path="/store-products" element={<Admin />} />
+          <Route path="/edit-store-product/:id?" element={<Admin />} />
           <Route path="/add-store-product" element={<Admin />} />
         </Route>
       </Routes>

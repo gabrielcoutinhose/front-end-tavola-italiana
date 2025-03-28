@@ -57,6 +57,42 @@ function Row({ row, onStatusUpdate }) {
     }
   }
 
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      backgroundColor: "var(--auxiliary-color)",
+      borderColor: state.isFocused ? "var(--accent-color)" : "var(--text-dark)",
+      "&:hover": {
+        borderColor: "var(--base-color)",
+      },
+      boxShadow: state.isFocused ? `0 0 0 1px var(--accent-color)` : "none",
+    }),
+    menu: (provided) => ({
+      ...provided,
+      backgroundColor: "var(--auxiliary-color)",
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      color: "var(--text-dark)",
+    }),
+    placeholder: (provided) => ({
+      ...provided,
+      color: "var(--text-dark)",
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isSelected
+        ? "var(--accent-color)"
+        : state.isFocused
+          ? "var(--secondary-color)"
+          : "transparent",
+      color: state.isSelected || state.isFocused ? "white" : "var(--text-dark)",
+      "&:hover": {
+        backgroundColor: "var(--auxiliary-color)",
+      },
+    }),
+  };
+
   return (
     <>
       <TableRow sx={{ "& > *": { borderBottom: "unset" } }}>
@@ -84,6 +120,7 @@ function Row({ row, onStatusUpdate }) {
             }
             onChange={(newStatus) => setNewStatus(row.orderId, newStatus.value)}
             isLoading={isLoading}
+            styles={customStyles}
           />
         </TableCell>
       </TableRow>
@@ -214,8 +251,15 @@ export function Orders() {
           </LinkMenu>
         ))}
       </Menu>
-      <TableContainer component={Paper}>
-        <Table aria-label="collapsible table">
+      <TableContainer
+        component={Paper}
+        sx={{
+          backgroundColor: "var(--auxiliary-color)",
+          maxHeight: "90vh",
+          overflowX: "auto",
+        }}
+      >
+        <Table sx={{ width: "100%" }} aria-label="collapsible table">
           <TableHead>
             <TableRow>
               <TableCell />

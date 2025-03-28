@@ -6,6 +6,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Edit from "../../assets/icons/edit-32.png";
 import No from "../../assets/icons/no-32.png";
@@ -16,6 +17,7 @@ import { Container, Image, Img, Button } from "./styles";
 
 export function Products() {
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function loadProducts() {
@@ -29,7 +31,11 @@ export function Products() {
     <Container>
       <TableContainer
         component={Paper}
-        sx={{ maxHeight: "95vh", overflowX: "auto" }}
+        sx={{
+          backgroundColor: "var(--auxiliary-color)",
+          maxHeight: "95vh",
+          overflowX: "auto",
+        }}
       >
         <Table sx={{ width: "100%" }} aria-label="simple table">
           <TableHead>
@@ -63,7 +69,13 @@ export function Products() {
                 </TableCell>
                 <TableCell>
                   <Button>
-                    <img src={Edit} alt="edit-icon" />
+                    <img
+                      src={Edit}
+                      alt="edit-icon"
+                      onClick={() =>
+                        navigate(`/edit-store-product/${product.id}`)
+                      }
+                    />
                   </Button>
                 </TableCell>
               </TableRow>

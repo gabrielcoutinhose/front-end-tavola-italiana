@@ -11,6 +11,8 @@ export default createGlobalStyle`
     --accent-color: #D1A274;
     --text-dark: #2B2B2B;
     --text-light: #FFFFFF;
+    --success-color: #9ACD32;
+    --problem-color: #E9967A;
   } 
 
   * {

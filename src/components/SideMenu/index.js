@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
+import edit2 from "../../assets/icons/edit-2-32.png";
 import logoutIcon from "../../assets/icons/logout-32.png";
 import ordersIcon from "../../assets/icons/shops-32.png";
 import productsIcon2 from "../../assets/icons/store-2-32.png";
@@ -20,7 +21,7 @@ export function SideMenu({ onToolChange }) {
       label: "Orders",
       link: "/store-orders",
       icon: ordersIcon,
-      tool: "orders",
+      tool: "store-orders",
     },
     {
       id: 2,
@@ -31,6 +32,13 @@ export function SideMenu({ onToolChange }) {
     },
     {
       id: 3,
+      label: "Edit Product",
+      link: "/edit-store-product",
+      icon: edit2,
+      tool: "edit-store-product",
+    },
+    {
+      id: 4,
       label: "Add Product",
       link: "/add-store-product",
       icon: productsIcon2,
@@ -52,7 +60,11 @@ export function SideMenu({ onToolChange }) {
           <Item
             to={item.link}
             onClick={(e) => handleClick(e, item.link, item.tool)}
-            isActive={location.pathname === item.link}
+            isActive={
+              item.link === "/edit-store-product"
+                ? location.pathname.startsWith("/edit-store-product")
+                : location.pathname === item.link
+            }
           >
             <img src={item.icon} alt={`${item.label} icon`} /> {item.label}
           </Item>

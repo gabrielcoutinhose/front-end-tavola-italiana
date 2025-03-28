@@ -1,6 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
@@ -16,9 +17,11 @@ import {
   ReactSelectStyled,
 } from "./styles";
 
-export function AddProduct() {
+export function EditProduct() {
   const [fileName, setFileName] = useState("");
   const [categories, setCategories] = useState([]);
+  const { id } = useParams();
+  const navigate = useNavigate();
 
   const schema = Yup.object().shape({
     name: Yup.string().required("Input product name!"),
@@ -52,35 +55,55 @@ export function AddProduct() {
       }),
   });
 
-  useEffect(() => {
-    async function loadCategories() {
-      const { data } = await api.get("categories");
-      setCategories(data);
-    }
-    loadCategories();
-  }, []);
-
   const {
     register,
     handleSubmit,
     control,
     reset,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const { data: categoriesData } = await api.get("categories");
+        setCategories(categoriesData);
+
+        const { data: productData } = await api.get(`products/${id}`);
+        setValue("name", productData.name);
+        setValue("price", productData.price);
+        setValue("category", {
+          id: productData.category_id,
+          name:
+            categoriesData.find((cat) => cat.id === productData.category_id)
+              ?.name || "",
+        });
+        setFileName(productData.url ? productData.url.split("/").pop() : "");
+      } catch (error) {
+        toast.error("Error loading product data: " + error.message);
+        console.error("Error loading data:", error);
+      }
+    }
+    loadData();
+  }, [id, setValue]);
 
   const onSubmit = async (data) => {
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("price", data.price);
     formData.append("category_id", data.category.id);
-    formData.append("file", data.file[0]);
+    if (data.file && data.file[0]) {
+      formData.append("file", data.file[0]);
+    }
+
     try {
-      await api.post("products", formData, {
+      await api.put(`products/${id}`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
-      toast.success("Product added successfully!");
+      toast.success("Product updated successfully!");
       reset({
         name: "",
         price: "",
@@ -88,9 +111,10 @@ export function AddProduct() {
         file: null,
       });
       setFileName("");
+      navigate("/products");
     } catch (error) {
-      toast.error("Error adding product: " + error.message);
-      console.error("Error adding product: ", error);
+      toast.error("Error updating product: " + error.message);
+      console.error("Error updating product:", error);
     }
   };
 
@@ -144,7 +168,7 @@ export function AddProduct() {
           />
           <ErrorMessage>{errors.category?.message}</ErrorMessage>
         </div>
-        <ReStyledButton type="submit">Add product</ReStyledButton>
+        <ReStyledButton type="submit">Update product</ReStyledButton>
       </form>
     </Container>
   );

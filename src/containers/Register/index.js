@@ -7,7 +7,7 @@ import * as Yup from "yup";
 
 import RegisterImg from "../../assets/images/register-image.png";
 import Logo from "../../assets/logo/logo.png";
-import { Button } from "../../components";
+import { Button, ErrorMessage } from "../../components";
 import api from "../../services/api";
 import {
   Container,
@@ -15,7 +15,6 @@ import {
   ContainerItems,
   Label,
   Input,
-  ErrorMessage,
   SignUp,
 } from "./styles";
 

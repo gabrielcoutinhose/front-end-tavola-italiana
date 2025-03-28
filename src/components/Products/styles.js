@@ -22,11 +22,11 @@ export const Img = styled.img`
   ${({ isYes }) =>
     isYes
       ? `
-          background: #9ACD32;
+          background: var(--success-color);
           border: none;
         `
       : `
-          background: #E9967A;
+          background: var(--problem-color);
           border: none;
         `}
 `;

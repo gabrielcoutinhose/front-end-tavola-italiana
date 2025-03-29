@@ -1,6 +1,7 @@
-FROM node:22-alpine
+FROM node:22-alp
 
-ARG MODE=dev
+# fix script and env logic later
+ARG MODE=start
 ENV NODE_ENV=${MODE}
 
 WORKDIR /app
@@ -10,6 +11,6 @@ RUN yarn install --frozen-lockfile
 
 COPY . .
 
-EXPOSE ${PORT:-3000}
+EXPOSE 3001
 
 CMD ["sh", "-c", "yarn run ${NODE_ENV}"]

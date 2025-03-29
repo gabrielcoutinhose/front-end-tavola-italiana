@@ -12,4 +12,4 @@ COPY . .
 
 EXPOSE ${PORT:-3000}
 
-CMD ["sh", "-c", "if [ \"$NODE_ENV\" = \"prod\" ]; then yarn build && yarn global add serve && serve -s build -l ${PORT:-3000}; else yarn start; fi"]
+CMD ["sh", "-c", "yarn run ${NODE_ENV}"]

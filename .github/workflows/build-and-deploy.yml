@@ -1,17 +1,13 @@
-name: Build and Deploy Frontend
+name: Build, Lint, Test and Deploy to Vercel
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
     branches:
       - main
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -19,32 +15,22 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: "18"
 
       - name: Install dependencies
-        run: |
-          npm install -g yarn
-          yarn install --frozen-lockfile
+        run: yarn install --frozen-lockfile
 
-      - name: Setup Docker Buildx
-        uses: docker/setup-buildx-action@v3
+      - name: Run lint
+        run: yarn lint
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Run tests
+        run: yarn tests
 
-      - name: Build and push Docker image
+      - name: Build
+        run: yarn build
+
+      - name: Deploy to Vercel
+        run: npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
         env:
-          MODE: ${{ secrets.MODE }}
-          PORT: ${{ secrets.PORT }}
-          REACT_APP_API_URL: ${{ secrets.REACT_APP_API_URL }}
-        run: |
-          docker build \
-            --build-arg MODE=${MODE:-prod} \
-            -t ${{ secrets.DOCKERHUB_USERNAME }}/meu-project-frontend:${{ github.sha }} \
-            -t ${{ secrets.DOCKERHUB_USERNAME }}/meu-project-frontend:latest \
-            .
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/meu-project-frontend:${{ github.sha }}
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/meu-project-frontend:latest
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}

@@ -2,12 +2,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 
 import RegisterImg from "../../assets/images/register-image.png";
 import Logo from "../../assets/logo/logo.png";
 import { Button, ErrorMessage } from "../../components";
+import { useUser } from "../../hooks/UserContext";
 import api from "../../services/api";
 import {
   Container,
@@ -19,6 +21,9 @@ import {
 } from "./styles";
 
 export function Register() {
+  const navigate = useNavigate();
+  const { putUserData } = useUser();
+
   const schema = Yup.object().shape({
     name: Yup.string().required("Name is required!"),
     email: Yup.string()
@@ -26,7 +31,7 @@ export function Register() {
       .required("the e-mail is required!"),
     password: Yup.string()
       .required("the password is required!")
-      .min(6, "It must 6 characters"),
+      .min(8, "It must 6 characters"),
     confirmPassword: Yup.string()
       .required("the password confirmation is required!")
       .oneOf([Yup.ref("password")], "passwords must be the same"),
@@ -56,6 +61,14 @@ export function Register() {
 
       if (status === 201 || status === 200) {
         toast.success("Registered with success!");
+        putUserData(data);
+        setTimeout(() => {
+          if (data.admin) {
+            navigate("/store-orders");
+          } else {
+            navigate("/");
+          }
+        }, 1000);
       } else if (status === 409) {
         toast.error("Email already in use. Try another one!");
       } else if (status === 400) {

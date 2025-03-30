@@ -1,9 +1,7 @@
 import axios from "axios";
 
 const backEndTavolaItaliana = axios.create({
-  baseURL:
-    process.env.REACT_APP_API_URL ||
-    `http://${process.env.REACT_APP_API_HOST}:${process.env.REACT_APP_API_PORT}`,
+  baseURL: process.env.REACT_APP_API_URL || "http://localhost:3001",
 });
 
 backEndTavolaItaliana.interceptors.request.use(async (config) => {

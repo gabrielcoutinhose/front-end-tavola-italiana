@@ -26,6 +26,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "tests": "react-scripts test --watchAll=false",
     "eject": "react-scripts eject",
     "lint": "eslint . --fix",
     "format": "prettier --write \"**/*.{js,mjs,cjs,jsx,json,css,md}\"",

@@ -21,7 +21,6 @@ import {
 
 export function Login() {
   const navigate = useNavigate();
-
   const { putUserData } = useUser();
 
   const schema = Yup.object().shape({
